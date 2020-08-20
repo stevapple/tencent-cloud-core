@@ -9,7 +9,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Test
+      - name: Print Swift version
+        run: swift --version
+      - name: Run tests
         run: swift test --enable-test-discovery
       - name: Build
         run: swift build -c release
@@ -20,7 +22,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Test
+      - name: Print Swift version
+        run: swift --version
+      - name: Run tests
         run: swift test
       - name: Build
         run: swift build -c release
