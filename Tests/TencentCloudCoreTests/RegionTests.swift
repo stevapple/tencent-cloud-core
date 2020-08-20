@@ -23,4 +23,19 @@ class TencentCloudRegionTests: XCTestCase {
             XCTAssertEqual(region, decoded.value)
         }
     }
+
+    func testRegionWrongFormat() {
+        let wrongRegionStrings = [
+            "ap-beijing-sss",
+            "ac-beijing",
+            "ap-shanghai-fsi-x",
+            "AP-beijing",
+            "ap-Beijing",
+            "ap-bei jing",
+        ]
+
+        for region in wrongRegionStrings {
+            XCTAssertNil(TencentCloud.Region(rawValue: region))
+        }
+    }
 }

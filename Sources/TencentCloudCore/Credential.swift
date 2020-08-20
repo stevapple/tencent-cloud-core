@@ -1,6 +1,6 @@
 /// A `struct` representing a Tencent Cloud credential.
 extension TencentCloud {
-    public struct Credential {
+    public struct Credential: Codable {
         let secretId: String
         let secretKey: String
         let sessionToken: String?
