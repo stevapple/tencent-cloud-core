@@ -16,6 +16,7 @@ extension TencentCloud {
                 return "\(service).\(Self.domain)"
             }
         }
+
         public var secretId: String { credential.secretId }
 
         public init?(of service: String, region: Region? = nil, credential: Credential? = nil) {
@@ -43,13 +44,15 @@ extension TencentCloud {
 extension TencentCloud.Credential {
     fileprivate static var `default`: Self? {
         if let secretId = env["TENCENT_SECRET_ID"],
-           let secretKey = env["TENCENT_SECRET_KEY"] {
+            let secretKey = env["TENCENT_SECRET_KEY"]
+        {
             let token = env["TENCENT_SESSION_TOKEN"]
             return TencentCloud.Credential(secretId: secretId, secretKey: secretKey, sessionToken: token)
         }
 
         if let secretId = env["TENCENTCLOUD_SECRETID"],
-           let secretKey = env["TENCENTCLOUD_SECRETKEY"] {
+            let secretKey = env["TENCENTCLOUD_SECRETKEY"]
+        {
             let token = env["TENCENTCLOUD_SESSIONTOKEN"]
             return TencentCloud.Credential(secretId: secretId, secretKey: secretKey, sessionToken: token)
         }

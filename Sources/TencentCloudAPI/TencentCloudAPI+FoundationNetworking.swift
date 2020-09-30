@@ -1,7 +1,7 @@
-import class Foundation.DateFormatter
-import struct Foundation.URL
 import struct Foundation.Date
+import class Foundation.DateFormatter
 import struct Foundation.Locale
+import struct Foundation.URL
 
 #if canImport(FoundationNetworking)
 import struct FoundationNetworking.URLRequest
@@ -30,15 +30,14 @@ extension TencentCloud.API {
                        "Host": endpoint.hostname,
                        "X-TC-Action": action,
                        "X-TC-Timestamp": Int(date.timeIntervalSince1970).description,
-                       "X-TC-Version": version
-        ]
+                       "X-TC-Version": version]
         let payloadJSON = try TencentCloud.jsonEncoder.encode(payload)
-        let signedHeaders = headers.sorted { $0.0 < $1.0 } .map { ($0.lowercased(), $1.lowercased()) }
+        let signedHeaders = headers.sorted { $0.0 < $1.0 }.map { ($0.lowercased(), $1.lowercased()) }
         let canonicalRequest = """
         \(httpMethod)
         /
-        
-        \(signedHeaders.map { "\($0.0):\($0.1)\n" } .joined())
+
+        \(signedHeaders.map { "\($0.0):\($0.1)\n" }.joined())
         \(signedHeaders.map { $0.0 }.joined(separator: ";"))
         \(SHA256.hash(data: payloadJSON).hexString)
         """.data(using: .utf8)!
@@ -73,7 +72,7 @@ extension TencentCloud.API {
             ("SignedHeaders", signedHeaders.map { $0.0 }.joined(separator: ";")),
             ("Signature", signature),
         ]
-        let authorization = "\(signAlgorithm) \(params.map { "\($0.0)=\($0.1)" } .joined(separator: ", "))"
+        let authorization = "\(signAlgorithm) \(params.map { "\($0.0)=\($0.1)" }.joined(separator: ", "))"
 
         headers.updateValue(authorization, forKey: "Authorization")
         if let token = endpoint.credential.sessionToken {
@@ -85,7 +84,7 @@ extension TencentCloud.API {
         headers.removeValue(forKey: "Host")
 
         var request = URLRequest(url: URL(string: "https://\(endpoint.hostname)/")!)
-        headers.forEach { (key, value) in
+        headers.forEach { key, value in
             request.setValue(value, forHTTPHeaderField: key)
         }
         request.httpMethod = httpMethod

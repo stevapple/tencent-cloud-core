@@ -1,5 +1,5 @@
-import class Foundation.JSONEncoder
 import class Foundation.JSONDecoder
+import class Foundation.JSONEncoder
 
 extension TencentCloud {
     internal static let jsonEncoder = JSONEncoder()

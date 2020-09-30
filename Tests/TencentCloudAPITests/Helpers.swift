@@ -1,5 +1,5 @@
-import TencentCloudAPI
 import Foundation
+import TencentCloudAPI
 
 struct Request: Codable {}
 struct Response: TencentCloudAPIResponse {
@@ -31,8 +31,8 @@ struct Response: TencentCloudAPIResponse {
 
             let state = try container.decode(String.self, forKey: .state)
             switch state {
-            case "AVAILABLE": isAvailable = true
-            case "UNAVAILABLE": isAvailable = false
+            case "AVAILABLE": self.isAvailable = true
+            case "UNAVAILABLE": self.isAvailable = false
             default:
                 throw DecodingError.dataCorruptedError(forKey: .state, in: container, debugDescription: "Expected ZoneState to be AVAILABLE or UNAVAILABLE, but `\(state)` does not forfill format")
             }
@@ -43,8 +43,8 @@ struct Response: TencentCloudAPIResponse {
             }
             self.id = id
 
-            zone = try container.decode(TencentCloud.Zone.self, forKey: .zone)
-            name = try container.decode(String.self, forKey: .name)
+            self.zone = try container.decode(TencentCloud.Zone.self, forKey: .zone)
+            self.name = try container.decode(String.self, forKey: .name)
         }
     }
 }

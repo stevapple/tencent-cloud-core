@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "tencent-cloud-core",
     platforms: [
-        .macOS(.v10_15)
+        .macOS(.v10_15),
     ],
     products: [
         .library(name: "TencentCloudCore", targets: ["TencentCloudCore"]),

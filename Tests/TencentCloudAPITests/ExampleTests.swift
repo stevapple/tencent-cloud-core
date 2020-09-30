@@ -1,5 +1,5 @@
-@testable import TencentCloudAPI
 import Foundation
+@testable import TencentCloudAPI
 import XCTest
 
 class TencentCloudAPITests: XCTestCase {
@@ -9,7 +9,7 @@ class TencentCloudAPITests: XCTestCase {
         let describeZones = TencentCloud.API<Request, Response>(endpoint: endpoint!, action: "DescribeZones", version: "2017-03-12")
 
         let semaphore = DispatchSemaphore(value: 0)
-        try describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) in
+        try describeZones.invoke(with: .init(), region: .ap_beijing) { response, error in
             XCTAssertNil(error)
             XCTAssertNotNil(response)
             if let response = response {
@@ -26,7 +26,7 @@ class TencentCloudAPITests: XCTestCase {
         let describeZones = TencentCloud.API<Request, Response>(endpoint: endpoint!, action: "DescribeZones", version: "2017-03-12")
 
         let semaphore = DispatchSemaphore(value: 0)
-        try describeZones.invoke(with: .init()) { (response, error) in
+        try describeZones.invoke(with: .init()) { response, error in
             XCTAssertNil(response)
             XCTAssertNotNil(error)
 
@@ -60,7 +60,7 @@ class TencentCloudAPITests: XCTestCase {
         let describeZones = TencentCloud.API<Request, ZoneResponse>(endpoint: endpoint!, action: "DescribeZones", version: "2017-03-12")
 
         let semaphore = DispatchSemaphore(value: 0)
-        try describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) in
+        try describeZones.invoke(with: .init(), region: .ap_beijing) { response, error in
             XCTAssertNil(response)
             XCTAssertNotNil(error)
 

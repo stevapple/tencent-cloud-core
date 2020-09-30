@@ -1,12 +1,12 @@
+import Crypto
 import struct Foundation.Data
 import protocol Foundation.DataProtocol
-import Crypto
 
 private let charA = UInt8(UnicodeScalar("a").value)
 private let char0 = UInt8(UnicodeScalar("0").value)
 
 private func itoh(_ value: UInt8) -> UInt8 {
-    return (value > 9) ? (charA + value - 10) : (char0 + value)
+    (value > 9) ? (charA + value - 10) : (char0 + value)
 }
 
 extension DataProtocol {
@@ -15,7 +15,7 @@ extension DataProtocol {
         let ptr = UnsafeMutablePointer<UInt8>.allocate(capacity: hexLen)
         var offset = 0
 
-        self.regions.forEach { (_) in
+        self.regions.forEach { _ in
             for i in self {
                 ptr[Int(offset * 2)] = itoh((i >> 4) & 0xF)
                 ptr[Int(offset * 2 + 1)] = itoh(i & 0xF)
@@ -31,7 +31,7 @@ extension SHA256Digest {
     var hexString: String {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
-            for i in 0..<Self.byteCount {
+            for i in 0 ..< Self.byteCount {
                 array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
             }
             return array.hexString
@@ -43,16 +43,17 @@ extension HashedAuthenticationCode {
     var hexString: String {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
-            for i in 0..<byteCount {
+            for i in 0 ..< byteCount {
                 array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
             }
             return array.hexString
         }
     }
+
     var data: Data {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
-            for i in 0..<byteCount {
+            for i in 0 ..< byteCount {
                 array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
             }
             return Data(array)

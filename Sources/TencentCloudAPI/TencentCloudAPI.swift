@@ -25,7 +25,7 @@ extension TencentCloud.API {
 
     public func invoke(with payload: Payload, region: TencentCloud.Region? = nil, completionHandler: @escaping (Response?, Error?) -> Void) throws {
         let request = try urlRequest(with: payload, region: region)
-        let dataTask = TencentCloud.urlSession.dataTask(with: request) { (data, _, error) in
+        let dataTask = TencentCloud.urlSession.dataTask(with: request) { data, _, error in
             do {
                 if let error = error { throw error }
                 if let data = data {
@@ -35,7 +35,7 @@ extension TencentCloud.API {
                     let response = try TencentCloud.jsonDecoder.decode(ResponseWrapper<Response>.self, from: data)
                     return completionHandler(response.body, nil)
                 }
-            } catch let error {
+            } catch {
                 return completionHandler(nil, error)
             }
             fatalError("Unhandled response cases")
