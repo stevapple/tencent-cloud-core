@@ -2,6 +2,10 @@ name: CI
 
 on: [push]
 
+env:
+  TENCENT_SECRET_ID: ${{ secrets.TENCENT_SECRET_ID }}
+  TENCENT_SECRET_KEY: ${{ secrets.TENCENT_SECRET_KEY }}
+
 jobs:
   test-ubuntu:
     name: Test on Linux
