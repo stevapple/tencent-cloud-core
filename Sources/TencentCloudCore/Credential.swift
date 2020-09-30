@@ -1,9 +1,9 @@
 /// A `struct` representing a Tencent Cloud credential.
 extension TencentCloud {
     public struct Credential: Codable {
-        let secretId: String
-        let secretKey: String
-        let sessionToken: String?
+        public let secretId: String
+        public let secretKey: String
+        public let sessionToken: String?
 
         enum CodingKeys: String, CodingKey {
             case secretId = "SecretId"
