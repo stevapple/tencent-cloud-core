@@ -1,4 +1,4 @@
-# How to use invoke Tencent Cloud APIs with Swift
+# How to invoke Tencent Cloud APIs with Swift
 
 This guide will instruct you to build and invoke a Tencent Cloud API in pure and pretty Swift code. It's never been easier to invoke Tencent Cloud APIs with Swift.
 
@@ -16,7 +16,7 @@ let endpoint = TencentCloud.Endpoint(of: "cvm")!
 let fsiEndpoint = TencentCloud.Endpoint("cvm.ap-shenzhen-fsi.tencentcloudapi.com")!
 ```
 
-The API credential will be automatically inferred from the environment using the following keys: `TENCENT_SECRET_ID`, `TENCENT_SECRET_KEY`, `TENCENT_SESSION_TOKEN`. in SCF environment, it'll also be inferred from the runtime. If there's no credential in the environment, you'll need to provide one, or the initializer will return `nil`:
+The API credential will be automatically inferred from the environment using the following keys: `TENCENT_SECRET_ID`, `TENCENT_SECRET_KEY`, `TENCENT_SESSION_TOKEN`. In SCF environment, it can also be inferred from the runtime. If there's no credential in the environment, you'll need to provide one, or the initializer will return `nil`:
 
 ```swift
 let customEndpoint = TencentCloud.Endpoint(
