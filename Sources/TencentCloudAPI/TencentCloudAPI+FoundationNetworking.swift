@@ -1,4 +1,3 @@
-
 import class Foundation.DateFormatter
 import struct Foundation.URL
 import struct Foundation.Date
@@ -12,8 +11,8 @@ import struct Foundation.URLRequest
 
 import Crypto
 
-let signAlgorithm = "TC3-HMAC-SHA256"
-let httpMethod = "POST"
+private let signAlgorithm = "TC3-HMAC-SHA256"
+private let httpMethod = "POST"
 
 extension TencentCloud {
     fileprivate static let dateFormatter: DateFormatter = {
