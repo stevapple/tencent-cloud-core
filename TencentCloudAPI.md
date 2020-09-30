@@ -99,17 +99,15 @@ To make the response structure clear, you're suggested to use nested types (or `
 Then you can easily build the API:
 
 ```swift
-let describeZones = TencentCloud.API<VoidRequest, ZonesResponse>(endpoint: endpoint, action: "DescribeZones", version: "2017-03-12", region: .ap_beijing)
+let describeZones = TencentCloud.API<VoidRequest, ZonesResponse>(endpoint: endpoint, action: "DescribeZones", version: "2017-03-12")
 ```
-
-Note that the region is different from what's set in the endpoint. You can easily access all known regions provided by `TencentCloudCore`.
 
 ## Invoke the API
 
 Finally, feel free to invoke the API:
 
 ```swift
-describeZones.invoke(with: .init()) { (response, error) ->
+describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) ->
     if let error = error {
         print("Error: \(error)")
         return
@@ -119,5 +117,7 @@ describeZones.invoke(with: .init()) { (response, error) ->
     }
 }
 ```
+
+Note that the region here is different from what's set in the endpoint. You can easily access all known regions provided by `TencentCloudCore`.
 
 The sample code above provides a simple template for error handling. The errors may come from networking, JSON decoding and Tencent Cloud platform.

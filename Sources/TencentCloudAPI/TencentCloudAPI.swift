@@ -3,15 +3,13 @@ extension TencentCloud {
         public typealias Payload = T
         public typealias Response = R
         public let endpoint: EndPoint
-        public let region: Region?
         public let action: String
         public let version: String
 
-        public init(endpoint: EndPoint, action: String, version: String, region: Region? = nil) {
+        public init(endpoint: EndPoint, action: String, version: String) {
             self.endpoint = endpoint
             self.action = action
             self.version = version
-            self.region = region
         }
     }
 }
@@ -25,8 +23,8 @@ extension TencentCloud.API {
         }
     }
 
-    public func invoke(with payload: Payload, completionHandler: @escaping (Response?, Error?) -> Void) throws {
-        let request = try urlRequest(with: payload)
+    public func invoke(with payload: Payload, region: TencentCloud.Region? = nil, completionHandler: @escaping (Response?, Error?) -> Void) throws {
+        let request = try urlRequest(with: payload, region: region)
         let dataTask = TencentCloud.urlSession.dataTask(with: request) { (data, _, error) in
             do {
                 if let error = error { throw error }

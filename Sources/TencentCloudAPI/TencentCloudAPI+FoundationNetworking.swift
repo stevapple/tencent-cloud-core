@@ -24,7 +24,7 @@ extension TencentCloud {
 }
 
 extension TencentCloud.API {
-    internal func urlRequest(with payload: Payload) throws -> URLRequest {
+    internal func urlRequest(with payload: Payload, region: TencentCloud.Region?) throws -> URLRequest {
         let date = Date()
         var headers = ["Content-Type": "application/json; charset=utf-8",
                        "Host": endpoint.hostname,
