@@ -2,15 +2,22 @@ extension TencentCloud {
     public struct API<T: Codable, R: TencentCloudAPIResponse> {
         public typealias Payload = T
         public typealias Response = R
-        public let endpoint: TencentCloud.EndPoint
-        public let region: TencentCloud.Region?
+        public let endpoint: EndPoint
+        public let region: Region?
         public let action: String
         public let version: String
+
+        public init(endpoint: EndPoint, action: String, version: String, region: Region? = nil) {
+            self.endpoint = endpoint
+            self.action = action
+            self.version = version
+            self.region = region
+        }
     }
 }
 
 extension TencentCloud.API {
-    private struct ResponseWrapper<T: TencentCloudAPIResponse>: Codable {
+    private struct ResponseWrapper<T: TencentCloudAPIResponse>: Decodable {
         let body: T
 
         enum CodingKeys: String, CodingKey {
@@ -24,8 +31,8 @@ extension TencentCloud.API {
             do {
                 if let error = error { throw error }
                 if let data = data {
-                    if let response = try? TencentCloud.jsonDecoder.decode(ResponseWrapper<TencentCloud.WrappedAPIError>.self, from: data) {
-                        throw response.body.error
+                    if let response = try? TencentCloud.jsonDecoder.decode(ResponseWrapper<TencentCloud.APIError>.self, from: data) {
+                        throw response.body
                     }
                     let response = try TencentCloud.jsonDecoder.decode(ResponseWrapper<Response>.self, from: data)
                     return completionHandler(response.body, nil)

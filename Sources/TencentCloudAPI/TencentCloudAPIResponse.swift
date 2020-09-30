@@ -1,15 +1,5 @@
-public protocol TencentCloudAPIResponse: Codable {
-    var requestId: String { get }
-}
+@_exported import struct Foundation.UUID
 
-extension TencentCloud {
-    internal struct WrappedAPIError: TencentCloudAPIResponse {
-        public let error: TencentCloud.APIError
-        public let requestId: String
-
-        enum CodingKeys: String, CodingKey {
-            case error = "Error"
-            case requestId = "RequestId"
-        }
-    }
+public protocol TencentCloudAPIResponse: Decodable {
+    var requestId: UUID { get }
 }
