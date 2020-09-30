@@ -16,7 +16,7 @@ let endpoint = TencentCloud.Endpoint(of: "cvm")!
 let fsiEndpoint = TencentCloud.Endpoint("cvm.ap-shenzhen-fsi.tencentcloudapi.com")!
 ```
 
-The API credential will be automatically inferred from the environment using the following keys: `API_SECRET_ID`, `API_SECRET_KEY`, `API_SESSION_TOKEN`. in SCF environment, it'll also be inferred from the runtime. If there's no credential in the environment, you'll need to provide one, or the initializer will return `nil`:
+The API credential will be automatically inferred from the environment using the following keys: `TENCENT_SECRET_ID`, `TENCENT_SECRET_KEY`, `TENCENT_SESSION_TOKEN`. in SCF environment, it'll also be inferred from the runtime. If there's no credential in the environment, you'll need to provide one, or the initializer will return `nil`:
 
 ```swift
 let customEndpoint = TencentCloud.Endpoint(
@@ -65,7 +65,7 @@ struct ZonesResponse: TencentCloudAPIResponse {
             case state = "ZoneState"
             case id = "ZoneId"
             case zone = "Zone"
-            cade name = "ZoneName"
+            case name = "ZoneName"
         }
 
         init(from decoder: Decoder) throws {
@@ -75,13 +75,13 @@ struct ZonesResponse: TencentCloudAPIResponse {
             switch state {
             case "AVAILABLE": isAvailable = true
             case "UNAVAILABLE": isAvailable = false
-            default: 
-                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Expected ZoneState to be AVAILABLE or UNAVAILABLE, but `\(state)` does not forfill format")
+            default:
+                throw DecodingError.dataCorruptedError(forKey: .state, in: container, debugDescription: "Expected ZoneState to be AVAILABLE or UNAVAILABLE, but `\(state)` does not forfill format")
             }
 
             let idString = try container.decode(String.self, forKey: .id)
             guard let id = UInt(idString) else {
-                throw DecodingError.dataCorruptedError(in: container, debugDescription: "Expected ZoneId to be an integer, but `\(idString)` does not forfill format")
+                throw DecodingError.dataCorruptedError(forKey: .id, in: container, debugDescription: "Expected ZoneId to be an integer, but `\(idString)` does not forfill format")
             }
             self.id = id
 
@@ -107,7 +107,7 @@ let describeZones = TencentCloud.API<VoidRequest, ZonesResponse>(endpoint: endpo
 Finally, feel free to invoke the API:
 
 ```swift
-describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) ->
+describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) in
     if let error = error {
         print("Error: \(error)")
         return

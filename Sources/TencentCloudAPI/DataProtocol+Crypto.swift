@@ -30,7 +30,10 @@ extension DataProtocol {
 extension SHA256Digest {
     var hexString: String {
         withUnsafeBytes { bytes in
-            let array = bytes.load(as: [UInt8].self)
+            var array = [UInt8]()
+            for i in 0..<Self.byteCount {
+                array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
+            }
             return array.hexString
         }
     }
@@ -39,13 +42,19 @@ extension SHA256Digest {
 extension HashedAuthenticationCode {
     var hexString: String {
         withUnsafeBytes { bytes in
-            let array = bytes.load(as: [UInt8].self)
+            var array = [UInt8]()
+            for i in 0..<byteCount {
+                array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
+            }
             return array.hexString
         }
     }
     var data: Data {
         withUnsafeBytes { bytes in
-            let array = bytes.load(as: [UInt8].self)
+            var array = [UInt8]()
+            for i in 0..<byteCount {
+                array.append(bytes.load(fromByteOffset: i, as: UInt8.self))
+            }
             return Data(array)
         }
     }

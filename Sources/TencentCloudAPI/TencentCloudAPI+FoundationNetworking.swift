@@ -33,13 +33,13 @@ extension TencentCloud.API {
                        "X-TC-Version": version
         ]
         let payloadJSON = try TencentCloud.jsonEncoder.encode(payload)
-        let signedHeaders = headers.map { (key, _) in key.lowercased() } .joined(separator: ";")
+        let signedHeaders = headers.sorted { $0.0 < $1.0 } .map { ($0.lowercased(), $1.lowercased()) }
         let canonicalRequest = """
         \(httpMethod)
         /
         
-        \(headers.map { (key, value) in "\(key.lowercased()):\(value.lowercased())\n" } .joined())
-        \(signedHeaders)
+        \(signedHeaders.map { "\($0.0):\($0.1)\n" } .joined())
+        \(signedHeaders.map { $0.0 }.joined(separator: ";"))
         \(SHA256.hash(data: payloadJSON).hexString)
         """.data(using: .utf8)!
 
@@ -69,11 +69,11 @@ extension TencentCloud.API {
         ).hexString
 
         let params = [
-            "Credential": "\(endpoint.credential.secretId)/\(credentialScope.0)/\(credentialScope.1)/\(credentialScope.2)",
-            "SignedHeaders": signedHeaders,
-            "Signature": signature
+            ("Credential", "\(endpoint.credential.secretId)/\(credentialScope.0)/\(credentialScope.1)/\(credentialScope.2)"),
+            ("SignedHeaders", signedHeaders.map { $0.0 }.joined(separator: ";")),
+            ("Signature", signature),
         ]
-        let authorization = "\(signAlgorithm) \(params.map { (key, value) in "\(key)=\(value)" } .joined(separator: ", "))"
+        let authorization = "\(signAlgorithm) \(params.map { "\($0.0)=\($0.1)" } .joined(separator: ", "))"
 
         headers.updateValue(authorization, forKey: "Authorization")
         if let token = endpoint.credential.sessionToken {

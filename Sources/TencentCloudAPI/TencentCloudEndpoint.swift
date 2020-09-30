@@ -3,7 +3,7 @@ import class Foundation.ProcessInfo
 private let env = ProcessInfo.processInfo.environment
 
 extension TencentCloud {
-    public struct EndPoint {
+    public struct Endpoint {
         private static let domain = "tencentcloudapi.com"
         internal let service: String
         internal let region: Region?
@@ -42,9 +42,9 @@ extension TencentCloud {
 
 extension TencentCloud.Credential {
     fileprivate static var `default`: Self? {
-        if let secretId = env["API_SECRET_ID"],
-           let secretKey = env["API_SECRET_KEY"] {
-            let token = env["API_SESSION_TOKEN"]
+        if let secretId = env["TENCENT_SECRET_ID"],
+           let secretKey = env["TENCENT_SECRET_KEY"] {
+            let token = env["TENCENT_SESSION_TOKEN"]
             return TencentCloud.Credential(secretId: secretId, secretKey: secretKey, sessionToken: token)
         }
 

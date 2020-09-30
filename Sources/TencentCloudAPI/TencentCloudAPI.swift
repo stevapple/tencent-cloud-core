@@ -2,11 +2,11 @@ extension TencentCloud {
     public struct API<T: Codable, R: TencentCloudAPIResponse> {
         public typealias Payload = T
         public typealias Response = R
-        public let endpoint: EndPoint
+        public let endpoint: Endpoint
         public let action: String
         public let version: String
 
-        public init(endpoint: EndPoint, action: String, version: String) {
+        public init(endpoint: Endpoint, action: String, version: String) {
             self.endpoint = endpoint
             self.action = action
             self.version = version
