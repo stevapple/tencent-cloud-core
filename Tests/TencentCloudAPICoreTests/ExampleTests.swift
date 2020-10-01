@@ -3,23 +3,20 @@ import Foundation
 import XCTest
 
 class TencentCloudAPITests: XCTestCase {
-    static let endpoint: TencentCloud.Endpoint = {
-        let endpoint = TencentCloud.Endpoint(of: "cvm")
-        precondition(endpoint != nil, "Please make sure a valid credential is passed through environment variables.")
-        return endpoint!
-    }()
+    static let endpoint = TencentCloud.Endpoint(of: "cvm")
 
-    func testExample() throws {
+    func testExample() {
         struct DescribeZones: TencentCloudAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
-            static var endpoint: TencentCloud.Endpoint { TencentCloudAPITests.endpoint }
+            let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
+        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
-        try DescribeZones.invoke(with: .init(), region: .ap_beijing) { response, error in
+        api.invoke(with: .init(), region: .ap_beijing) { response, error in
             XCTAssertNil(error)
             XCTAssertNotNil(response)
             if let response = response {
@@ -30,17 +27,18 @@ class TencentCloudAPITests: XCTestCase {
         _ = semaphore.wait(timeout: .distantFuture)
     }
 
-    func testErrorExample() throws {
+    func testErrorExample() {
         struct DescribeZones: TencentCloudAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
-            static var endpoint: TencentCloud.Endpoint { TencentCloudAPITests.endpoint }
+            let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
+        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
-        try DescribeZones.invoke(with: .init()) { response, error in
+        api.invoke(with: .init()) { response, error in
             XCTAssertNil(response)
             XCTAssertNotNil(error)
 
@@ -53,17 +51,18 @@ class TencentCloudAPITests: XCTestCase {
         _ = semaphore.wait(timeout: .distantFuture)
     }
 
-    func testMismatchedResponse() throws {
+    func testMismatchedResponse() {
         struct DescribeZones: TencentCloudAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = FalseResponse
 
-            static var endpoint: TencentCloud.Endpoint { TencentCloudAPITests.endpoint }
+            let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
+        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
-        try DescribeZones.invoke(with: .init(), region: .ap_beijing) { response, error in
+        api.invoke(with: .init(), region: .ap_beijing) { response, error in
             XCTAssertNil(response)
             XCTAssertNotNil(error)
 
@@ -74,18 +73,19 @@ class TencentCloudAPITests: XCTestCase {
         _ = semaphore.wait(timeout: .distantFuture)
     }
 
-    func testCustomName() throws {
+    func testCustomName() {
         struct MyAPI: TencentCloudAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
-            static var endpoint: TencentCloud.Endpoint { TencentCloudAPITests.endpoint }
+            let endpoint: TencentCloud.Endpoint
             static let action = "DescribeZones"
             static let version = "2017-03-12"
         }
+        let api = MyAPI(endpoint: TencentCloudAPITests.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
-        try MyAPI.invoke(with: .init(), region: .ap_beijing) { response, error in
+        api.invoke(with: .init(), region: .ap_beijing) { response, error in
             XCTAssertNil(error)
             XCTAssertNotNil(response)
             if let response = response {

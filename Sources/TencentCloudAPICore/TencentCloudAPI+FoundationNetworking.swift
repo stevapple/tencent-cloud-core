@@ -24,13 +24,13 @@ extension TencentCloud {
 }
 
 extension TencentCloudAPI {
-    internal static func urlRequest(with payload: RequestPayload, region: TencentCloud.Region?) throws -> URLRequest {
+    internal func urlRequest(with payload: RequestPayload, region: TencentCloud.Region?, credential: TencentCloud.Credential) throws -> URLRequest {
         let date = Date()
         var headers = ["Content-Type": "application/json; charset=utf-8",
                        "Host": endpoint.hostname,
-                       "X-TC-Action": action,
+                       "X-TC-Action": Self.action,
                        "X-TC-Timestamp": Int(date.timeIntervalSince1970).description,
-                       "X-TC-Version": version]
+                       "X-TC-Version": Self.version]
         let payloadJSON = try TencentCloud.jsonEncoder.encode(payload)
         let signedHeaders = headers.sorted { $0.0 < $1.0 }.map { ($0.lowercased(), $1.lowercased()) }
         let canonicalRequest = """
@@ -52,7 +52,7 @@ extension TencentCloudAPI {
 
         let secretDate = HMAC<SHA256>.authenticationCode(
             for: credentialScope.0.data(using: .utf8)!,
-            using: .init(data: "TC3\(endpoint.credential.secretKey)".data(using: .utf8)!)
+            using: .init(data: "TC3\(credential.secretKey)".data(using: .utf8)!)
         ).data
         let secretService = HMAC<SHA256>.authenticationCode(
             for: credentialScope.1.data(using: .utf8)!,
@@ -68,14 +68,14 @@ extension TencentCloudAPI {
         ).hexString
 
         let params = [
-            ("Credential", "\(endpoint.credential.secretId)/\(credentialScope.0)/\(credentialScope.1)/\(credentialScope.2)"),
+            ("Credential", "\(credential.secretId)/\(credentialScope.0)/\(credentialScope.1)/\(credentialScope.2)"),
             ("SignedHeaders", signedHeaders.map { $0.0 }.joined(separator: ";")),
             ("Signature", signature),
         ]
         let authorization = "\(signAlgorithm) \(params.map { "\($0.0)=\($0.1)" }.joined(separator: ", "))"
 
         headers.updateValue(authorization, forKey: "Authorization")
-        if let token = endpoint.credential.sessionToken {
+        if let token = credential.sessionToken {
             headers.updateValue(token, forKey: "X-TC-Token")
         }
         if let region = region {

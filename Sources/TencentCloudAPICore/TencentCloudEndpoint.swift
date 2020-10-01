@@ -7,7 +7,7 @@ extension TencentCloud {
         private static let domain = "tencentcloudapi.com"
         internal let service: String
         internal let region: Region?
-        internal let credential: Credential
+        internal let credential: Credential?
 
         public var hostname: String {
             if let region = region {
@@ -17,13 +17,12 @@ extension TencentCloud {
             }
         }
 
-        public var secretId: String { credential.secretId }
+        public var secretId: String? { credential?.secretId }
 
-        public init?(of service: String, region: Region? = nil, credential: Credential? = nil) {
+        public init(of service: String, region: Region? = nil, credential: Credential? = nil) {
             self.service = service
             self.region = region
-            guard let newCredential = credential ?? .default else { return nil }
-            self.credential = newCredential
+            self.credential = credential
         }
 
         public init?(_ hostname: String, credential: Credential? = nil) {
@@ -42,7 +41,7 @@ extension TencentCloud {
 }
 
 extension TencentCloud.Credential {
-    fileprivate static var `default`: Self? {
+    internal static var `default`: Self? {
         if let secretId = env["TENCENT_SECRET_ID"],
             let secretKey = env["TENCENT_SECRET_KEY"]
         {

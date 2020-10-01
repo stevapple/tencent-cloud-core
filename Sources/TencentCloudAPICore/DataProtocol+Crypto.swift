@@ -10,7 +10,7 @@ private func itoh(_ value: UInt8) -> UInt8 {
 }
 
 extension DataProtocol {
-    var hexString: String {
+    internal var hexString: String {
         let hexLen = self.count * 2
         let ptr = UnsafeMutablePointer<UInt8>.allocate(capacity: hexLen)
         var offset = 0
@@ -28,7 +28,7 @@ extension DataProtocol {
 }
 
 extension SHA256Digest {
-    var hexString: String {
+    internal var hexString: String {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
             for i in 0 ..< Self.byteCount {
@@ -40,7 +40,7 @@ extension SHA256Digest {
 }
 
 extension HashedAuthenticationCode {
-    var hexString: String {
+    internal var hexString: String {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
             for i in 0 ..< byteCount {
@@ -50,7 +50,7 @@ extension HashedAuthenticationCode {
         }
     }
 
-    var data: Data {
+    internal var data: Data {
         withUnsafeBytes { bytes in
             var array = [UInt8]()
             for i in 0 ..< byteCount {

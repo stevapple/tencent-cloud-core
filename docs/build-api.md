@@ -11,23 +11,23 @@ First, import and build the endpoint with its host name or service info:
 ```swift
 import TencentCloudAPI
 
-let endpoint = TencentCloud.Endpoint(of: "cvm")!
+let endpoint = TencentCloud.Endpoint(of: "cvm")
 // With region
-let endpoint = TencentCloud.Endpoint(of: "cvm", region: .ap_beijing)!
+let beijingEndpoint = TencentCloud.Endpoint(of: "cvm", region: .ap_beijing)
 // With host name
-let shenzhenFsiEndpoint = TencentCloud.Endpoint("cvm.ap-shenzhen-fsi.tencentcloudapi.com")!
+let shenzhenFsiEndpoint = TencentCloud.Endpoint("cvm.ap-shenzhen-fsi.tencentcloudapi.com")
 ```
 
 You can easily access all known regions provided by `TencentCloudCore`.
 
-The API credential will be automatically inferred from the environment using the following keys: `TENCENT_SECRET_ID`, `TENCENT_SECRET_KEY`, `TENCENT_SESSION_TOKEN`. In SCF environment, it can also be inferred from the runtime. If there's no credential in the environment, you'll need to provide one, or the initializer will return `nil`:
+The API credential will be automatically inferred during invocation from the environment using the following keys: `TENCENT_SECRET_ID`, `TENCENT_SECRET_KEY`, `TENCENT_SESSION_TOKEN`. In SCF environment, it can also be inferred from the runtime. If there's no credential in the environment, you may need to provide one when creating the endpoint, or the invocations will fail:
 
 ```swift
 let customEndpoint = TencentCloud.Endpoint(
     of: "cvm",
     credential: .init(secretId: "AKIDz8krbsJ5yKBZQpn74WFkmLPx3*******",
                       secretKey: "Gu5t9xGARNpq86cd98joQYCN3*******")
-)!
+)
 ```
 
 ## Build the request and response
@@ -106,9 +106,11 @@ struct DescribeZones: TencentCloudAPI {
     typealias RequestPayload = DescribeZonesRequest
     typealias Response = DescribeZonesResponse
 
-    static let endpoint = endpoint
+    let endpoint: TencentCloud.Endpoint
     static let version = "2017-03-12"
 }
+
+let describeZones = DescribeZones(endpoint: endpoint)
 ```
 
 Note that the API `Action` will be inferred from its struct/class/enum name. If you want to use another name, you'll need to provide an `action` additionally:
@@ -118,8 +120,7 @@ struct MyAPI: TencentCloudAPI {
     typealias RequestPayload = DescribeZonesRequest
     typealias Response = DescribeZonesResponse
 
-    static let endpoint = endpoint
-    static let action = "DescribeZones"
+    let endpoint: TencentCloud.Endpoint
     static let version = "2017-03-12"
 }
 ```
@@ -129,7 +130,7 @@ struct MyAPI: TencentCloudAPI {
 Finally, feel free to invoke the API:
 
 ```swift
-DescribeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) in
+describeZones.invoke(with: .init(), region: .ap_beijing) { (response, error) in
     if let error = error {
         print("Error: \(error)")
         return
