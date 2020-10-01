@@ -1,1 +1,1 @@
-@_exported import TencentCloudCore
+@_exported import TencentCloudAPICore

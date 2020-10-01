@@ -1,8 +1,9 @@
 import Foundation
-import TencentCloudAPI
+import TencentCloudAPICore
 
-struct Request: Codable {}
-struct Response: TencentCloudAPIResponse {
+struct DescribeZonesRequest: Codable {}
+
+struct DescribeZonesResponse: TencentCloudAPIResponse {
     let count: Int
     let zones: [ZoneInfo]
     let requestId: UUID
@@ -46,5 +47,21 @@ struct Response: TencentCloudAPIResponse {
             self.zone = try container.decode(TencentCloud.Zone.self, forKey: .zone)
             self.name = try container.decode(String.self, forKey: .name)
         }
+    }
+}
+
+struct FalseResponse: TencentCloudAPIResponse {
+    let state: String
+    let id: UInt
+    let zone: TencentCloud.Zone
+    let name: String
+    let requestId: UUID
+
+    enum CodingKeys: String, CodingKey {
+        case state = "ZoneState"
+        case id = "ZoneId"
+        case zone = "Zone"
+        case name = "ZoneName"
+        case requestId = "RequestId"
     }
 }

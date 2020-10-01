@@ -9,7 +9,7 @@ This is a package for quickly adding Tencent Cloud support for Swift projects.
 You can add it as a package dependency in `Package.swift` with:
 
 ```swift
-.package(url: "https://github.com/stevapple/tencent-cloud-core", from: "0.1.0"),
+.package(url: "https://github.com/stevapple/tencent-cloud-core", from: "0.2.0"),
 ```
 
 ## `TencentCloudCore`
@@ -26,14 +26,14 @@ You can add it as a target dependency in `Package.swift` with:
 .product(name: "TencentCloudCore", package: "tencent-cloud-core"),
 ```
 
-## `TencentCloudAPI`
+## `TencentCloudAPICore`
 
 This module provides a simple model to define and invoke a Tencent Cloud API.
 
 You can add it as a target dependency in `Package.swift` with:
 
 ```swift
-.product(name: "TencentCloudAPI", package: "tencent-cloud-core"),
+.product(name: "TencentCloudAPICore", package: "tencent-cloud-core"),
 ```
 
-For usage instruction, see [How to invoke Tencent Cloud APIs with Swift](docs/invoke-api.md).
+For usage instruction, see [How to build a Tencent Cloud API with Swift](docs/build-api.md).

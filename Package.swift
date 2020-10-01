@@ -9,6 +9,7 @@ let package = Package(
     ],
     products: [
         .library(name: "TencentCloudCore", targets: ["TencentCloudCore"]),
+        .library(name: "TencentCloudAPICore", targets: ["TencentCloudAPICore"]),
         .library(name: "TencentCloudAPI", targets: ["TencentCloudAPI"]),
     ],
     dependencies: [
@@ -17,7 +18,9 @@ let package = Package(
     targets: [
         .target(name: "TencentCloudCore", dependencies: []),
         .testTarget(name: "TencentCloudCoreTests", dependencies: ["TencentCloudCore"]),
-        .target(name: "TencentCloudAPI", dependencies: ["TencentCloudCore", "Crypto"]),
-        .testTarget(name: "TencentCloudAPITests", dependencies: ["TencentCloudAPI"]),
+        .target(name: "TencentCloudAPICore", dependencies: ["TencentCloudCore", "Crypto"]),
+        .testTarget(name: "TencentCloudAPICoreTests", dependencies: ["TencentCloudAPICore"]),
+        .target(name: "TencentCloudAPI", dependencies: ["TencentCloudAPICore"]),
+//        .testTarget(name: "TencentCloudAPITests", dependencies: ["TencentCloudAPI"]),
     ]
 )
