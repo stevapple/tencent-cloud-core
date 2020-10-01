@@ -2,7 +2,7 @@ import Foundation
 @testable import TencentCloudAPICore
 import XCTest
 
-class TencentCloudAPITests: XCTestCase {
+class TencentCloudAPICoreTests: XCTestCase {
     static let endpoint = TencentCloud.Endpoint(of: "cvm")
 
     func testExample() {
@@ -13,7 +13,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in
@@ -35,7 +35,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init()) { response, error in
@@ -59,7 +59,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in
@@ -82,7 +82,7 @@ class TencentCloudAPITests: XCTestCase {
             static let action = "DescribeZones"
             static let version = "2017-03-12"
         }
-        let api = MyAPI(endpoint: TencentCloudAPITests.endpoint)
+        let api = MyAPI(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in
@@ -90,6 +90,29 @@ class TencentCloudAPITests: XCTestCase {
             XCTAssertNotNil(response)
             if let response = response {
                 XCTAssertTrue(response.zones.count > 0)
+            }
+            semaphore.signal()
+        }
+        _ = semaphore.wait(timeout: .distantFuture)
+    }
+
+    func testChineseLanguage() {
+        struct DescribeZones: TencentCloudRegionalAPI {
+            typealias RequestPayload = DescribeZonesRequest
+            typealias Response = DescribeZonesResponse
+
+            let endpoint: TencentCloud.Endpoint
+            static let version = "2017-03-12"
+        }
+        let api = DescribeZones(endpoint: Self.endpoint)
+
+        let semaphore = DispatchSemaphore(value: 0)
+        api.invoke(with: .init(), region: .ap_beijing, language: .zh_CN) { response, error in
+            XCTAssertNil(error)
+            XCTAssertNotNil(response)
+            if let response = response {
+                XCTAssertTrue(response.zones.count > 0)
+                XCTAssertTrue(response.zones.map { $0.name }.contains("北京一区"))
             }
             semaphore.signal()
         }
