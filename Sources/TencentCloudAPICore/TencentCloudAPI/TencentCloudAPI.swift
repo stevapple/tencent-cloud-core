@@ -12,7 +12,7 @@ public protocol TencentCloudAPI {
 extension TencentCloudAPI {
     public static var action: String { "\(Self.self)" }
 
-    public func invoke(with payload: RequestPayload, region: TencentCloud.Region? = nil, completionHandler: @escaping (Response?, Error?) -> Void) {
+    internal func invoke(with payload: RequestPayload, region: TencentCloud.Region?, completionHandler: @escaping (Response?, Error?) -> Void) {
         do {
             guard let credential = endpoint.credential ?? .default else {
                 throw ClientError.noCredential

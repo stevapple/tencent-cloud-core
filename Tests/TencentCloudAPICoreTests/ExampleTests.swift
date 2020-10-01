@@ -6,7 +6,7 @@ class TencentCloudAPITests: XCTestCase {
     static let endpoint = TencentCloud.Endpoint(of: "cvm")
 
     func testExample() {
-        struct DescribeZones: TencentCloudAPI {
+        struct DescribeZones: TencentCloudRegionalAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
@@ -28,7 +28,7 @@ class TencentCloudAPITests: XCTestCase {
     }
 
     func testErrorExample() {
-        struct DescribeZones: TencentCloudAPI {
+        struct DescribeZones: TencentCloudGlobalAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
@@ -52,7 +52,7 @@ class TencentCloudAPITests: XCTestCase {
     }
 
     func testMismatchedResponse() {
-        struct DescribeZones: TencentCloudAPI {
+        struct DescribeZones: TencentCloudRegionalAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = FalseResponse
 
@@ -74,7 +74,7 @@ class TencentCloudAPITests: XCTestCase {
     }
 
     func testCustomName() {
-        struct MyAPI: TencentCloudAPI {
+        struct MyAPI: TencentCloudRegionalAPI {
             typealias RequestPayload = DescribeZonesRequest
             typealias Response = DescribeZonesResponse
 
