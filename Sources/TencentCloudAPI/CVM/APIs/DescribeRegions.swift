@@ -17,7 +17,7 @@ extension TencentCloud.CVM.DescribeRegions {
 
     public struct Response: TencentCloudAPIResponse {
         public let count: Int
-        public let regions: [RegionInfo]
+        public let regions: [TencentCloud.CVM.RegionInfo]
         public let requestId: UUID
 
         enum CodingKeys: String, CodingKey {

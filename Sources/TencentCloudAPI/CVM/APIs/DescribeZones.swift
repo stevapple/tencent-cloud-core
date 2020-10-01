@@ -17,7 +17,7 @@ extension TencentCloud.CVM.DescribeZones {
 
     public struct Response: TencentCloudAPIResponse {
         public let count: Int
-        public let zones: [ZoneInfo]
+        public let zones: [TencentCloud.CVM.ZoneInfo]
         public let requestId: UUID
 
         enum CodingKeys: String, CodingKey {

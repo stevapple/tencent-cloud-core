@@ -2,7 +2,7 @@ import Foundation
 @testable import TencentCloudAPI
 import XCTest
 
-class CVMTests: XCTestCase {
+class TencentCloudCVMTests: XCTestCase {
     func testDescribeZones() throws {
         let semaphore = DispatchSemaphore(value: 0)
         TencentCloud.CVM.DescribeZones.invoke(with: .init(), region: .ap_beijing) { response, error in

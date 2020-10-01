@@ -2,7 +2,7 @@ import Foundation
 @testable import TencentCloudAPICore
 import XCTest
 
-class TencentCloudAPITests: XCTestCase {
+class TencentCloudAPICoreTests: XCTestCase {
     static let endpoint = TencentCloud.Endpoint(of: "cvm")
 
     func testExample() {
@@ -13,7 +13,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in
@@ -35,7 +35,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init()) { response, error in
@@ -59,7 +59,7 @@ class TencentCloudAPITests: XCTestCase {
             let endpoint: TencentCloud.Endpoint
             static let version = "2017-03-12"
         }
-        let api = DescribeZones(endpoint: TencentCloudAPITests.endpoint)
+        let api = DescribeZones(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in
@@ -82,7 +82,7 @@ class TencentCloudAPITests: XCTestCase {
             static let action = "DescribeZones"
             static let version = "2017-03-12"
         }
-        let api = MyAPI(endpoint: TencentCloudAPITests.endpoint)
+        let api = MyAPI(endpoint: Self.endpoint)
 
         let semaphore = DispatchSemaphore(value: 0)
         api.invoke(with: .init(), region: .ap_beijing) { response, error in

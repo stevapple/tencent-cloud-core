@@ -42,13 +42,13 @@ You can add it as a target dependency in `Package.swift` with:
 .product(name: "TencentCloudAPICore", package: "tencent-cloud-core"),
 ```
 
-This is available in `v0.1.0` with the name `TencentCloudAPI`.
+This is available from `v0.1.0` with a former name `TencentCloudAPI`.
 
 For usage instruction, see [How to build a Tencent Cloud API with Swift](docs/build-api.md) (base on `v0.2.0`).
 
 ## `TencentCloudAPI`
 
-This module provides a simple model to define and invoke a Tencent Cloud API.
+This module provides pre-defined Tencent Cloud API that users can invoke directly.
 
 You can add it as a target dependency in `Package.swift` with:
 
