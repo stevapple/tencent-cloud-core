@@ -21,6 +21,6 @@ let package = Package(
         .target(name: "TencentCloudAPICore", dependencies: ["TencentCloudCore", "Crypto"]),
         .testTarget(name: "TencentCloudAPICoreTests", dependencies: ["TencentCloudAPICore"]),
         .target(name: "TencentCloudAPI", dependencies: ["TencentCloudAPICore"]),
-//        .testTarget(name: "TencentCloudAPITests", dependencies: ["TencentCloudAPI"]),
+        .testTarget(name: "TencentCloudAPITests", dependencies: ["TencentCloudAPI"]),
     ]
 )
