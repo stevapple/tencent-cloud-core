@@ -44,7 +44,7 @@ You can add it as a target dependency in `Package.swift` with:
 
 This is available from `v0.1.0` with a former name `TencentCloudAPI`.
 
-For usage instruction, see [How to build a Tencent Cloud API with Swift](docs/build-api.md) (base on `v0.2.0`).
+For usage instruction, see [How to build a Tencent Cloud API with Swift](docs/build-api.md) (base on `v0.2.6`).
 
 ## `TencentCloudAPI`
 

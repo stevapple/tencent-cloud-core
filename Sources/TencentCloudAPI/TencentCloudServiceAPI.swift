@@ -4,7 +4,7 @@ public protocol TencentCloudServiceAPI: TencentCloudAPI {
     init(endpoint: TencentCloud.Endpoint)
 }
 
-fileprivate extension TencentCloudServiceAPI {
+private extension TencentCloudServiceAPI {
     static var `default`: Self { .init(endpoint: endpoint) }
 }
 
