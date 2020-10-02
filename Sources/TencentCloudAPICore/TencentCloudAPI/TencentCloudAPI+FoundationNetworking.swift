@@ -1,6 +1,6 @@
 import struct Foundation.Date
 import class Foundation.DateFormatter
-import struct Foundation.Locale
+import struct Foundation.TimeZone
 import struct Foundation.URL
 
 #if canImport(FoundationNetworking)
@@ -14,17 +14,17 @@ import Crypto
 private let signAlgorithm = "TC3-HMAC-SHA256"
 private let httpMethod = "POST"
 
-extension TencentCloud {
-    fileprivate static let dateFormatter: DateFormatter = {
+private extension TencentCloud {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "UTC")
+        formatter.timeZone = TimeZone(identifier: "UTC")
         formatter.dateFormat = "yyyy-MM-dd"
         return formatter
     }()
 }
 
 extension TencentCloudAPI {
-    internal func urlRequest(with payload: RequestPayload, region: TencentCloud.Region?, credential: TencentCloud.Credential) throws -> URLRequest {
+    internal func urlRequest(with payload: RequestPayload, region: TencentCloud.Region?, language: TencentCloud.Language?, credential: TencentCloud.Credential) throws -> URLRequest {
         let date = Date()
         var headers = ["Content-Type": "application/json; charset=utf-8",
                        "Host": endpoint.hostname,
@@ -80,6 +80,9 @@ extension TencentCloudAPI {
         }
         if let region = region {
             headers.updateValue(region.rawValue, forKey: "X-TC-Region")
+        }
+        if let language = language {
+            headers.updateValue(language.rawValue, forKey: "X-TC-Language")
         }
         headers.removeValue(forKey: "Host")
 

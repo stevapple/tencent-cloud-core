@@ -1,22 +1,29 @@
-protocol TencentCloudServiceAPI: TencentCloudAPI, ExposingDefault {
+public protocol TencentCloudServiceAPI: TencentCloudAPI {
     static var endpoint: TencentCloud.Endpoint { get }
+
     init(endpoint: TencentCloud.Endpoint)
 }
 
-extension TencentCloudServiceAPI {
-    internal static var `default`: Self {
-        .init(endpoint: endpoint)
-    }
+fileprivate extension TencentCloudServiceAPI {
+    static var `default`: Self { .init(endpoint: endpoint) }
 }
 
-extension TencentCloudServiceAPI where Self: TencentCloudGlobalAPI {
-    internal static func invoke(with payload: RequestPayload, completionHandler: @escaping (Response?, Error?) -> Void) {
+public extension TencentCloudServiceAPI where Self: TencentCloudGlobalAPI {
+    static func invoke(with payload: RequestPayload, completionHandler: @escaping (Response?, Error?) -> Void) {
         self.default.invoke(with: payload, completionHandler: completionHandler)
     }
+
+    static func invoke(with payload: RequestPayload, language: TencentCloud.Language, completionHandler: @escaping (Response?, Error?) -> Void) {
+        self.default.invoke(with: payload, language: language, completionHandler: completionHandler)
+    }
 }
 
-extension TencentCloudServiceAPI where Self: TencentCloudRegionalAPI {
-    internal static func invoke(with payload: RequestPayload, region: TencentCloud.Region, completionHandler: @escaping (Response?, Error?) -> Void) {
+public extension TencentCloudServiceAPI where Self: TencentCloudRegionalAPI {
+    static func invoke(with payload: RequestPayload, region: TencentCloud.Region, completionHandler: @escaping (Response?, Error?) -> Void) {
         self.default.invoke(with: payload, region: region, completionHandler: completionHandler)
+    }
+
+    static func invoke(with payload: RequestPayload, region: TencentCloud.Region, language: TencentCloud.Language, completionHandler: @escaping (Response?, Error?) -> Void) {
+        self.default.invoke(with: payload, region: region, language: language, completionHandler: completionHandler)
     }
 }

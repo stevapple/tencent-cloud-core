@@ -12,12 +12,12 @@ public protocol TencentCloudAPI {
 extension TencentCloudAPI {
     public static var action: String { "\(Self.self)" }
 
-    internal func invoke(with payload: RequestPayload, region: TencentCloud.Region?, completionHandler: @escaping (Response?, Error?) -> Void) {
+    internal func invoke(with payload: RequestPayload, region: TencentCloud.Region?, language: TencentCloud.Language?, completionHandler: @escaping (Response?, Error?) -> Void) {
         do {
             guard let credential = endpoint.credential ?? .default else {
                 throw ClientError.noCredential
             }
-            let request = try urlRequest(with: payload, region: region, credential: credential)
+            let request = try urlRequest(with: payload, region: region, language: language, credential: credential)
             let dataTask = TencentCloud.urlSession.dataTask(with: request) { data, _, error in
                 do {
                     if let error = error { throw error }

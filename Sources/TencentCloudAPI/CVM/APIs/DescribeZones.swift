@@ -13,7 +13,9 @@ extension TencentCloud.CVM {
 }
 
 extension TencentCloud.CVM.DescribeZones {
-    public struct RequestPayload: Codable {}
+    public struct RequestPayload: Codable {
+        public init() {}
+    }
 
     public struct Response: TencentCloudAPIResponse {
         public let count: Int

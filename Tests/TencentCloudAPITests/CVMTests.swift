@@ -1,15 +1,29 @@
 import Foundation
-@testable import TencentCloudAPI
+import TencentCloudAPI
 import XCTest
 
 class TencentCloudCVMTests: XCTestCase {
     func testDescribeZones() throws {
         let semaphore = DispatchSemaphore(value: 0)
-        TencentCloud.CVM.DescribeZones.invoke(with: .init(), region: .ap_beijing) { response, error in
+        TencentCloud.CVM.DescribeZones.invoke(with: TencentCloud.CVM.DescribeZones.RequestPayload(), region: .ap_beijing) { response, error in
             XCTAssertNil(error)
             XCTAssertNotNil(response)
             if let response = response {
                 XCTAssertTrue(response.zones.count > 0)
+            }
+            semaphore.signal()
+        }
+        _ = semaphore.wait(timeout: .distantFuture)
+    }
+
+    func testDescribeZonesInChinese() throws {
+        let semaphore = DispatchSemaphore(value: 0)
+        TencentCloud.CVM.DescribeZones.invoke(with: .init(), region: .ap_beijing, language: .zh_CN) { response, error in
+            XCTAssertNil(error)
+            XCTAssertNotNil(response)
+            if let response = response {
+                XCTAssertTrue(response.zones.count > 0)
+                XCTAssertTrue(response.zones.map { $0.name }.contains("北京一区"))
             }
             semaphore.signal()
         }
