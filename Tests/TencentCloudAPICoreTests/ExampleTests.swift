@@ -1,5 +1,5 @@
 import Foundation
-@testable import TencentCloudAPICore
+import TencentCloudAPICore
 import XCTest
 
 class TencentCloudAPICoreTests: XCTestCase {

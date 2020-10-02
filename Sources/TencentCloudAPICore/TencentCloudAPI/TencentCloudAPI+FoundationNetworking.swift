@@ -14,8 +14,8 @@ import Crypto
 private let signAlgorithm = "TC3-HMAC-SHA256"
 private let httpMethod = "POST"
 
-extension TencentCloud {
-    fileprivate static let dateFormatter: DateFormatter = {
+private extension TencentCloud {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.timeZone = TimeZone(identifier: "UTC")
         formatter.dateFormat = "yyyy-MM-dd"

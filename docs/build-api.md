@@ -9,7 +9,7 @@ Let's take the [DescribeZones](https://intl.cloud.tencent.com/document/product/2
 First, import and build the endpoint with its host name or service info:
 
 ```swift
-import TencentCloudAPI
+import TencentCloudAPICore
 
 let endpoint = TencentCloud.Endpoint(of: "cvm")
 // With region
@@ -99,10 +99,12 @@ To make the response structure clear, you're suggested to use nested types (or `
 
 ## Build the API
 
-Then you can easily build the API with `TencentCloudAPI` protocol:
+Then you can easily build the API with the pre-defined protocols.
+
+`TencentCloudGlobalAPI` corresponds to APIs that don't need a `Region` input, and `TencentCloudRegionalAPI`s will always need one.
 
 ```swift
-struct DescribeZones: TencentCloudAPI {
+struct DescribeZones: TencentCloudRegionalAPI {
     typealias RequestPayload = DescribeZonesRequest
     typealias Response = DescribeZonesResponse
 
@@ -116,7 +118,7 @@ let describeZones = DescribeZones(endpoint: endpoint)
 Note that the API `Action` will be inferred from its struct/class/enum name. If you want to use another name, you'll need to provide an `action` additionally:
 
 ```swift
-struct MyAPI: TencentCloudAPI {
+struct MyAPI: TencentCloudRegionalAPI {
     typealias RequestPayload = DescribeZonesRequest
     typealias Response = DescribeZonesResponse
 
