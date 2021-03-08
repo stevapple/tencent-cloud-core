@@ -10,7 +10,6 @@ let package = Package(
     products: [
         .library(name: "TencentCloudCore", targets: ["TencentCloudCore"]),
         .library(name: "TencentCloudAPICore", targets: ["TencentCloudAPICore"]),
-        .library(name: "TencentCloudAPI", targets: ["TencentCloudAPI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0"),
@@ -20,7 +19,5 @@ let package = Package(
         .testTarget(name: "TencentCloudCoreTests", dependencies: ["TencentCloudCore"]),
         .target(name: "TencentCloudAPICore", dependencies: ["TencentCloudCore", "Crypto"]),
         .testTarget(name: "TencentCloudAPICoreTests", dependencies: ["TencentCloudAPICore"]),
-        .target(name: "TencentCloudAPI", dependencies: ["TencentCloudAPICore"]),
-//        .testTarget(name: "TencentCloudAPITests", dependencies: ["TencentCloudAPI"]),
     ]
 )
