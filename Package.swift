@@ -12,7 +12,7 @@ let package = Package(
         .library(name: "TencentCloudAPICore", targets: ["TencentCloudAPICore"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/apple/swift-crypto", from: "1.0.0"),
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "1.0.0"),
     ],
     targets: [
         .target(name: "TencentCloudCore", dependencies: []),
